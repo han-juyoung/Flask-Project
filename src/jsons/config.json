@@ -1,0 +1,61 @@
+{
+    "name": "wce_full",
+    "n_gpu": 1,
+    "log_excel": {
+        "logging": true,
+        "log_dir": "mean_new/wce/"
+    },
+    "arch": {
+        "type": "MilabModel",
+        "args": {
+            "node_sizes": [
+                23,
+                90,
+                80,
+                90
+            ]
+        }
+    },
+    "data_loader": {
+        "type": "MilabDataLoader",
+        "args": {
+            "data_dir": "data/",
+            "file_name": "train_set_pre_worked.xlsx",
+            "batch_size": 256,
+            "shuffle": false,
+            "validation_split": 0,
+            "smote": false,
+            "num_workers": 2
+        }
+    },
+    "optimizer": {
+        "type": "Adam",
+        "args": {
+            "lr": 0.001,
+            "weight_decay": 0,
+            "amsgrad": true
+        }
+    },
+    "loss": {
+        "name": "wce_loss",
+        "args": {}
+    },
+    "metrics": [
+        "auroc"
+    ],
+    "lr_scheduler": {
+        "type": "CosineAnnealingWarmRestarts",
+        "args": {
+            "T_0": 15
+        }
+    },
+    "trainer": {
+        "epochs": 50,
+        "save_dir": "constrast_experiment/",
+        "save_freq": 50,
+        "verbosity": 2,
+        "monitor": "min val_loss",
+        "early_stop": 50,
+        "tensorboard": true
+    }
+}

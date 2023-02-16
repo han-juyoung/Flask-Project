@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title>PatientData Page</title>
+    <style>
+        * {
+            font-family: Consolas, monospace;
+            font-size: 16px;
+            padding-bottom: 3px;
+        }
+
+        /* .DBP1-text {
+            padding: 5px 5px;
+            background-color: #444444;
+            border-radius: 5px;
+            color: #ffffff;
+            position: absolute;
+            display: none;
+            margin-top: -2px;
+            margin-left: 2px;
+        }
+
+        .SBP1-text {
+            padding: 5px 5px;
+            background-color: #444444;
+            border-radius: 5px;
+            color: #ffffff;
+            position: absolute;
+            display: none;
+            margin-top: -2px;
+            margin-left: 2px;
+        }
+
+        .V1_BMI-text {
+            padding: 5px 5px;
+            background-color: #444444;
+            border-radius: 5px;
+            color: #ffffff;
+            position: absolute;
+            display: none;
+            margin-top: -2px;
+            margin-left: 2px;
+        }
+
+        .V1_glu_amt-text {
+            padding: 5px 5px;
+            background-color: #444444;
+            border-radius: 5px;
+            color: #ffffff;
+            position: absolute;
+            display: none;
+            margin-top: -2px;
+            margin-left: 2px;
+        }
+
+        .aft_sleep-text {
+            padding: 5px 5px;
+            background-color: #444444;
+            border-radius: 5px;
+            color: #ffffff;
+            position: absolute;
+            display: none;
+            margin-top: -2px;
+            margin-left: 2px;
+        }
+
+        .age-text {
+            padding: 5px 5px;
+            background-color: #444444;
+            border-radius: 5px;
+            color: #ffffff;
+            position: absolute;
+            display: none;
+            margin-top: -2px;
+            margin-left: 2px;
+        }
+
+        .bef_sleep-text {
+            padding: 5px 5px;
+            background-color: #444444;
+            border-radius: 5px;
+            color: #ffffff;
+            position: absolute;
+            display: none;
+            margin-top: -2px;
+            margin-left: 2px;
+        }
+
+        .bmi_aft-text {
+            padding: 5px 5px;
+            background-color: #444444;
+            border-radius: 5px;
+            color: #ffffff;
+            position: absolute;
+            display: none;
+            margin-top: -2px;
+            margin-left: 2px;
+        }
+
+        .moccp_t-text {
+            padding: 5px 5px;
+            background-color: #444444;
+            border-radius: 5px;
+            color: #ffffff;
+            position: absolute;
+            display: none;
+            margin-top: -2px;
+            margin-left: 2px;
+        }
+
+        .DBP1:hover+.DBP1-text {
+            display: inline-block;
+            align-content: flex-end;
+        }
+
+        .SBP1:hover+.SBP1-text {
+            display: inline-block;
+            align-content: flex-end;
+        }
+
+        /* .V1_BMI:hover+.V1_BMI-text {
+            display: inline-block;
+            align-content: flex-end;
+        } 
+
+        .V1_glu_amt:hover+.V1_glu_amt-text {
+            display: inline-block;
+            align-content: flex-end;
+        }
+
+        .aft_sleep:hover+.aft_sleep-text {
+            display: inline-block;
+            align-content: flex-end;
+        }
+
+        .age:hover+.age-text {
+            display: inline-block;
+            align-content: flex-end;
+        }
+
+        .bef_sleep:hover+.bef_sleep-text {
+            display: inline-block;
+            align-content: flex-end;
+        }
+
+        .bmi_aft:hover+.bmi_aft-text {
+            display: inline-block;
+            align-content: flex-end;
+        }
+
+        .moccp_t:hover+.moccp_t-text {
+            display: inline-block;
+            align-content: flex-end;
+        } */
+    </style>
+</head>
+</head>
+
+<body>
+    <div>
+        <h2>Patient Data Input Form</h2>
+    </div>
+    <form action="/predict" method="POST">
+        <!--method = "get" 은 주소창에 기록이남고 넘어감
+            method = "post" 는 정보를 숨기고 넘어감-->
+        <div>이완기 혈압 <input type="text" class="DBP1" name="DBP1" placeholder="연속형수치" required="required" size="10">
+        </div>
+        <!--이완기혈압/연속형수치 -->
+        <div>수축기 혈압 <input type="text" class="SBP1" name="SBP1" placeholder="연속형수치" required="required" size="10">
+        </div> <!-- 1차 수축기 혈압/연속형수치-->
+        <!-- <div>V1_BMI &nbsp&nbsp<input type="text" class="V1_BMI" name="V1_BMI" placeholder="연속형수치" required="required"
+                size="30">
+            <p class="V1_BMI-text">임신 전 BMI</p>
+        </div>
+        임신전 BMI/연속형수치 - 값 삭제 -->
+
+        <div><label for="V1_FHISTORY_DM">당뇨 가족력 </label> <!-- 당뇨가족력-->
+            <select id="V1_FHISTORY_DM" name="V1_FHISTORY_DM">
+                <option value="0">없음</option>
+                <option value="1">있음</option>
+            </select>
+        </div>
+
+        <div><label for="V1_FHISTORY_HTN">고혈압 가족력 </label> <!-- 고혈압 가족력-->
+            <select id="V1_FHISTORY_HTN" name="V1_FHISTORY_HTN">
+                <option value="0">없음</option>
+                <option value="1">있음</option>
+            </select>
+        </div>
+
+        <div><label for="V1_UPRO">단백뇨 2point 양성</label> <!-- 단백뇨 2point 양성 -->
+            <select id="V1_UPRO" name="V1_UPRO">
+                <option value="0">2++미만</option>
+                <option value="1">2++이상</option>
+            </select>
+        </div>
+
+        <div><label for="V1_USUG">요당 2point 양성</label> <!-- 요당 2point 양성 -->
+            <select id="V1_USUG" name="V1_USUG">
+                <option value="0">2++미만</option>
+                <option value="1">2++이상</option>
+            </select>
+        </div>
+
+        <div>임신 최초 혈당 <input type="text" class="V1_glu_amt" name="V1_glu_amt" placeholder="연속형수치" required="required"
+                size="10">
+        </div>
+        <!-- 혈당/연속형수치 -->
+
+        <div><label for="V1_preg_dm">GDM 과거력</label>
+            <!--임신성 당뇨의 과거력 -->
+            <select id="V1_preg_dm" name="V1_preg_dm">
+                <option value="0">없음</option>
+                <option value="1">있음</option>
+            </select>
+        </div>
+
+        <div><label for="aft_cal">임신 후 칼슘 보충제</label>
+            <!--임신후 칼슘 보충제 섭취 -->
+            <select id="aft_cal" name="aft_cal">
+                <option value="0">미섭취</option>
+                <option value="1">섭취</option>
+            </select>
+        </div>
+
+
+        <div>임신후 평균 수면시간<input type="text" class="aft_sleep" name="aft_sleep" placeholder="연속형수치" required="required"
+                size="10">
+        </div>
+        <!-- 임신 후 평균 수면시간/연속형수치 -->
+        <div>산모 나이<input type="text" class="age" name="age" placeholder="연속형수치" required="required">
+        </div> <!-- 산모 나이/연속형수치 -->
+
+        <div><label for="bef_cont">직전 임신구분</label> <!-- 직전임신구분 -->
+            <select id="bef_cont" name="bef_cont">
+                <option value="0">분만력없음</option>
+                <option value="1">정상분만</option>
+                <option value="2">사산(20주이상)</option>
+                <option value="3">유산/사산(12~20주)</option>
+                <option value="4">유산(12주미만)</option>
+            </select>
+        </div>
+
+        <div><label for="bef_folt">임신전 엽산 섭취</label>
+            <!--임신전 엽산 보충제 섭취 -->
+            <select id="bef_folt" name="bef_folt">
+                <option value="0">미섭취</option>
+                <option value="1">섭취</option>
+            </select>
+        </div>
+
+        <div><label for="bef_ink">임신전 보충제 섭취</label>
+            <!--임신전 보충제 이용 -->
+            <select id="bef_ink" name="bef_ink">
+                <option value="0">미섭취</option>
+                <option value="1">섭취</option>
+            </select>
+        </div>
+
+        <div>임신전 평균 수면시간<input type="text" class="bef_sleep" name="bef_sleep" placeholder="연속형수치" required="required"
+                size="10">
+        </div>
+        <!-- 임신 전 평균 수면시간/연속형수치 -->
+
+        <div>임신 후 BMI<input type="text" bclass="bmi_aft" name="bmi_aft" placeholder="연속형수치" required="required"
+                size="10">
+        </div>
+        <!-- 임신 후 BMI/연속형수치 -->
+
+        <div><label for="childbirth_no">분만력 건수</label> <!-- 분만력 건수 -->
+            <select id="childbirth_no" name="childbirth_no">
+                <option value="0">없음</option>
+                <option value="1">1건</option>
+                <option value="2">2건</option>
+                <option value="3">3건</option>
+                <option value="4">4건</option>
+                <option value="5">5건</option>
+            </select>
+        </div>
+
+        <div><label for="gedu">보호자 교육정도</label> <!-- 보호자 교육정도 -->
+            <select id="gedu" name="gedu">
+                <option value="0">못받음</option>
+                <option value="1">초졸</option>
+                <option value="2">중졸</option>
+                <option value="3">고졸</option>
+                <option value="4">전문대졸</option>
+                <option value="5">대졸</option>
+                <option value="6">석사이상</option>
+                <option value="7">미답변</option>
+            </select>
+        </div>
+
+        <div><label for="goccp">보호자 직업</label> <!-- 보호자 직업 -->
+            <select id="goccp" name="goccp">
+                <option value="0">없음</option>
+                <option value="1">사무직</option>
+                <option value="2">서비스직</option>
+                <option value="3">군인</option>
+                <option value="4">기타</option>
+                <option value="5">미답변</option>
+            </select>
+        </div>
+
+        <div><label for="met_ope">산부인과 수술력</label>
+            <select id="met_ope" name="met_ope">
+                <!-- 산부인과 수술력 -->
+                <option value="0">없음</option>
+                <option value="1">있음</option>
+            </select>
+        </div>
+
+        <div>산모 근무시간<input type="text" class="moccp_t" name="moccp_t" placeholder="연속형수치" required="required" size="10">
+        </div>
+        <!-- 산모근무시간/연속형수치 -->
+
+        <div><label for="pre_birth">조산(37주) 과거력</label>
+            <select id="pre_birth" name="pre_birth">
+                <!-- 조산의 과거력(37주 미만) -->
+                <option value="0">없음</option>
+                <option value="1">있음</option>
+            </select>
+        </div>
+
+        <div><label for="preg_htn2">임신성고혈압 과거력</label>
+            <select id="preg_htn2" name="preg_htn2">
+                <!-- 임신성 고혈압 과거력 -->
+                <option value="0">없음</option>
+                <option value="1">있음</option>
+            </select>
+        </div>
+
+        <!-- <div><label for="v1_medu">v1_medu</label>
+            산모교육정도 - 값삭제
+            <select id="v1_medu" name="v1_medu">
+                <option value="0">정규교육 못받음</option>
+                <option value="1">초졸</option>
+                <option value="2">중졸</option>
+                <option value="3">고졸</option>
+                <option value="4">전문대졸</option>
+                <option value="5">대졸</option>
+                <option value="6">석사이상</option>
+                <option value="7">답변하지않음</option>
+            </select>
+        </div><br> -->
+
+        <div><input type="submit" value="predict"></div> <!-- 버튼누르면 예측 -->
+    </form>
+
+    <div>
+        <p>{{ out }}</p>
+    </div>
+</body>
+
+</html>

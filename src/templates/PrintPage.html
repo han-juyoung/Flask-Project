@@ -1,0 +1,22 @@
+{% extends "FormPage.html" %}
+
+{% block content %}
+{% if out > 27.48091 %}
+<div class="wrapper">
+    <div class="circle_red">
+        <div class="num">
+            <p>{{out}}</p>
+            <div class="text">위 환자는 고위험 환자 입니다.</div>
+        </div>
+    </div>
+</div>
+{% elif out <= 27.48091 %} <div class="wrapper">
+    <div class="circle_blue">
+        <div class="num">
+            <p>{{out}}</p>
+            <div class="text2">위 환자는 정상군 환자 입니다.</div>
+        </div>
+    </div>
+    </div>
+    {% endif %}
+    {% endblock %}

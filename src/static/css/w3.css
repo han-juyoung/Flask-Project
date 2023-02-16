@@ -1,0 +1,13 @@
+.circle {
+    margin: 10px;
+    width: 100px;
+    height: 100px;
+    border: 15px solid rgb(163, 151, 198);
+    border-radius: 50%;
+}
+
+.wrapper {
+    margin: 0 auto;
+    padding: 30px;
+    max-width: 1170px;
+}

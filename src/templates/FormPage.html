@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PatientData Page</title>
+    <style>
+        * {
+            font-family: sans-serif, monospace;
+            padding-bottom: 3px;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: rgb(89, 159, 228);
+            font-family: 'Open Sans', sans-serif;
+            display: flex;
+            font-size: 16px;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 5px;
+            font-size: 16px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            width: 600px;
+
+        }
+
+        h2 {
+            text-align: center;
+            margin: 0 0 20px;
+            font-size: 16px;
+        }
+
+        .form {
+
+            padding: 30px 40px;
+            font-size: 16px;
+
+        }
+
+        .form-control {
+
+            margin-bottom: 10px;
+            padding-bottom: 20px;
+            font-size: 16px;
+            position: relative;
+        }
+
+        .form-control input {
+            border: 2px solid #f0f0f0;
+            border-radius: 4px;
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+
+        }
+
+        .predict_print {
+            position: absolute;
+            font-size: 16px;
+            /* display: inline-block; */
+            top: 40%;
+            left: 50%;
+        }
+
+        .circle_red {
+            margin: 10px;
+            width: 120px;
+            height: 120px;
+            font-size: 16px;
+            border: 15px solid rgb(227, 112, 126);
+            border-radius: 50%;
+        }
+
+        .circle_blue {
+            margin: 10px;
+            width: 120px;
+            height: 120px;
+            font-size: 16px;
+            border: 15px solid rgb(83, 146, 240);
+            border-radius: 50%;
+        }
+
+        .wrapper {
+            margin: 0 auto;
+            padding: 30px;
+            max-width: 1170px;
+        }
+
+        .num {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .text {
+            position: absolute;
+            left: 44.5%;
+            top: 1040px;
+        }
+
+        .text2 {
+            position: absolute;
+            left: 44.5%;
+            top: 1040px;
+        }
+
+        /* .DBP1-text {
+            padding: 5px 5px;
+            background-color: #444444;
+            border-radius: 5px;
+            color: #ffffff;
+            position: absolute;
+            display: none;
+            margin-top: -2px;
+            margin-left: 2px;
+        }
+
+        .DBP1:hover+.DBP1-text {
+            display: inline-block;
+            align-content: flex-end;
+        } */
+    </style>
+</head>
+</head>
+
+<body>
+    <div class="container">
+        <form action="/predict" method="POST">
+            <!--method = "get" 은 주소창에 기록이남고 넘어감
+            method = "post" 는 정보를 숨기고 넘어감-->
+            <table cellpadding="2" width="85%" align="center" cellspacing="2">
+                <tr class="form-control">
+                    <td colspan=2>
+                        <h2>Patient Data Input Form</h2>
+                    </td>
+                </tr>
+                <tr class="form-control">
+                    <td>이완기 혈압</td>
+                    <td><input type="text" class="DBP1" name="DBP1" placeholder="연속형수치" required="required" size="20">
+                    </td>
+                </tr>
+                <tr class="form-control">
+                    <td>수축기 혈압</td>
+                    <td><input type="text" class="SBP1" name="SBP1" placeholder="연속형수치" required="required" size="20">
+                    </td>
+                </tr>
+                <!-- <div>V1_BMI &nbsp&nbsp<input type="text" class="V1_BMI" name="V1_BMI" placeholder="연속형수치" required="required"
+                size="30">
+            <p class="V1_BMI-text">임신 전 BMI</p>
+        </div>
+        임신전 BMI/연속형수치 - 값 삭제 -->
+                <tr>
+                    <td for="V1_FHISTORY_DM">당뇨 가족력 </td> <!-- 당뇨가족력-->
+                    <td><select id="V1_FHISTORY_DM" name="V1_FHISTORY_DM" style="width:150px">
+                            <option value=" 0">없음</option>
+                            <option value="1">있음</option>
+                        </select></td>
+                </tr>
+
+                <tr>
+                    <td for="V1_FHISTORY_HTN">고혈압 가족력 </td> <!-- 고혈압 가족력-->
+                    <td><select id="V1_FHISTORY_HTN" name="V1_FHISTORY_HTN" style="width:150px">
+                            <option value="0">없음</option>
+                            <option value="1">있음</option>
+                        </select></td>
+                </tr>
+
+                <tr>
+                    <td for="V1_UPRO">단백뇨 2point 양성</td> <!-- 단백뇨 2point 양성 -->
+                    <td><select id="V1_UPRO" name="V1_UPRO" style="width:150px">
+                            <option value="0">2++미만</option>
+                            <option value="1">2++이상</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td for="V1_USUG">요당 2point 양성</td> <!-- 요당 2point 양성 -->
+                    <td><select id="V1_USUG" name="V1_USUG" style="width:150px">
+                            <option value="0">2++미만</option>
+                            <option value="1">2++이상</option>
+                        </select></td>
+                </tr>
+
+                <tr class="form-control">
+                    <td>임신 최초 혈당</td>
+                    <td><input type="text" class="V1_glu_amt" name="V1_glu_amt" placeholder="연속형수치" required="required"
+                            size="20"></td>
+                </tr>
+                <tr>
+                    <td for="V1_preg_dm">GDM 과거력</td>
+                    <!--임신성 당뇨의 과거력 -->
+                    <td><select id="V1_preg_dm" name="V1_preg_dm" style="width:150px">
+                            <option value="0">없음</option>
+                            <option value="1">있음</option>
+                        </select></td>
+                </tr>
+
+                <tr>
+                    <td for="aft_cal">임신 후 칼슘 보충제</td>
+                    <td><select id="aft_cal" name="aft_cal" style="width:150px">
+                            <option value="0">미섭취</option>
+                            <option value="1">섭취</option>
+                        </select></td>
+                </tr>
+
+                <tr class="form-control">
+                    <td>임신후 평균 수면시간</td>
+                    <td><input type="text" class="aft_sleep" name="aft_sleep" placeholder="연속형수치" required="required"
+                            size="20"></td>
+                </tr>
+
+                <tr class="form-control">
+                    <td>산모 나이</td>
+                    <td><input type="text" class="age" name="age" placeholder="연속형수치" required="required" size="20">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td for="bef_cont">직전 임신구분</td>
+                    <td><select id="bef_cont" name="bef_cont" style="width:150px">
+                            <option value="0">분만력없음</option>
+                            <option value="1">정상분만</option>
+                            <option value="2">사산(20주이상)</option>
+                            <option value="3">유산/사산(12~20주)</option>
+                            <option value="4">유산(12주미만)</option>
+                        </select></td>
+                </tr>
+
+                <tr>
+                    <td for="bef_folt">임신전 엽산 섭취</td>
+                    <td><select id="bef_folt" name="bef_folt" style="width:150px">
+                            <option value="0">미섭취</option>
+                            <option value="1">섭취</option>
+                        </select></td>
+                </tr>
+
+                <tr>
+                    <td for="bef_ink">임신전 보충제 섭취</td>
+                    <td><select id="bef_ink" name="bef_ink" style="width:150px">
+                            <option value="0">미섭취</option>
+                            <option value="1">섭취</option>
+                        </select></td>
+                </tr>
+
+                <tr class="form-control">
+                    <td>임신전 평균 수면시간</td>
+                    <td><input type="text" class="bef_sleep" name="bef_sleep" placeholder="연속형수치" required="required"
+                            size="20"></td>
+                </tr>
+
+                <tr class="form-control">
+                    <td>임신 후 BMI</td>
+                    <td><input type="text" bclass="bmi_aft" name="bmi_aft" placeholder="연속형수치" required="required"
+                            size="20"></td>
+                </tr>
+
+                <tr>
+                    <td for="childbirth_no">분만력 건수</td>
+                    <td><select id="childbirth_no" name="childbirth_no" style="width:150px">
+                            <option value="0">없음</option>
+                            <option value="1">1건</option>
+                            <option value="2">2건</option>
+                            <option value="3">3건</option>
+                            <option value="4">4건</option>
+                            <option value="5">5건</option>
+                        </select></td>
+                </tr>
+
+                <tr>
+                    <td for="gedu">보호자 교육정도</td>
+                    <td><select id="gedu" name="gedu" style="width:150px">
+                            <option value="0">없음</option>
+                            <option value="1">초졸</option>
+                            <option value="2">중졸</option>
+                            <option value="3">고졸</option>
+                            <option value="4">전문대졸</option>
+                            <option value="5">대졸</option>
+                            <option value="6">석사이상</option>
+                            <option value="7">미답변</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td for="goccp">보호자 직업</td>
+                    <td><select id="goccp" name="goccp" style="width:150px">
+                            <option value="0">없음</option>
+                            <option value="1">사무직</option>
+                            <option value="2">서비스직</option>
+                            <option value="3">군인</option>
+                            <option value="4">기타</option>
+                            <option value="5">미답변</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td for="met_ope">산부인과 수술력</td>
+                    <td><select id="met_ope" name="met_ope" style="width:150px">
+                            <option value="0">없음</option>
+                            <option value="1">있음</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr class="form-control">
+                    <td>산모 근무시간</td>
+                    <td><input type="text" class="moccp_t" name="moccp_t" placeholder="연속형수치" required="required"
+                            size="20"></td>
+                </tr>
+
+                <tr>
+                    <td for="pre_birth">조산(37주) 과거력</td>
+                    <td><select id="pre_birth" name="pre_birth" style="width:150px">
+                            <option value="0">없음</option>
+                            <option value="1">있음</option>
+                        </select></td>
+                </tr>
+
+                <tr>
+                    <td for="preg_htn2">임신성고혈압 과거력</td>
+                    <td><select id="preg_htn2" name="preg_htn2" style="width:150px">
+                            <option value="0">없음</option>
+                            <option value="1">있음</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="form_button">
+                    <td><input type="submit" value="predict">
+                        <input type="reset" value="reset">
+                    </td> <!-- 버튼누르면 예측 -->
+                </tr>
+            </table>
+        </form>
+        {% block content %}
+        {% endblock %}
+        <!-- <p><img src="{{ predict_image }}" alt="predict_img" height="150px" width="150px"
+                onerror="this.style.display='none'"></p> -->
+        <p><img src="{{ plot_image }}" alt="predict_img" height="300px" width="600px"
+                onerror="this.style.display='none'">
+        </p>
+
+    </div>
+
+    </div>
+
+</body>
+
+</html>
